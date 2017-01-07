@@ -13,38 +13,23 @@ var map = new google.maps.Map(document.getElementById('map'), opt);
 
 //指定した画像のアイコンを設置する
 
-//鴨池
-var image1 = 'fishicon1.png';
-    var marker1 = new google.maps.Marker({
-        position: {lat: 35.387115, lng: 139.427281 },
-        map: map,
-        icon: image1
-    });
 
-//κ
-var image2 = 'fishicon2.png';
-    var marker2 = new google.maps.Marker({
-        position: {lat: 35.387704, lng: 139.426141 },
-        map: map,
-        icon: image2
-    });
+var image = ['fishicon1.png', 'fishicon2.png', 'fishicon3.png', 'fishicon4.png'];
+var coordinate = [
+    ['鴨池', 35.387115, 139.427281],
+    ['κ', 35.387704, 139.426141],
+    ['θ', 35.388918, 139.427515],
+    ['メディア', 35.388211, 139.427310]
+];
+var marker1, marker2, marker3, marker4;
+var marker = [marker1, marker2, marker3, marker4];
 
-//θ
-var image3 = 'fishicon3.png';
-    var marker3 = new google.maps.Marker({
-        position: {lat: 35.388918, lng: 139.427515 },
+var i;
+for (i = 1; i < 5; i++) {
+    
+    marker[i - 1] = new google.maps.Marker({
+        position: {lat: coordinate[i - 1][1], lng: coordinate[i - 1][2] },
         map: map,
-        icon: image3
+        icon: image[i - 1]
     });
-
-//メディア
-var image4 = 'fishicon4.png';
-    var marker4 = new google.maps.Marker({
-        position: {lat: 35.388211, lng: 139.427310 },
-        map: map,
-        icon: image4
-    });
-
-function sakujo() {
-			marker1.setMap(null);
 }
