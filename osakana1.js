@@ -9,7 +9,7 @@ var opt = {
     center: new google.maps.LatLng(35.387951, 139.427123),
     mapTypeId: google.maps.MapTypeId.ROADMAP
 };
- 
+
 // 地図を表示する。
 var map = new google.maps.Map(document.getElementById('map'), opt);
 
@@ -26,7 +26,7 @@ var marker = [marker1, marker2, marker3, marker4, marker5];
 
 var i;
 for (i = 0; i < 5; i++) {
-    
+
     marker[i] = new google.maps.Marker({
         position: {lat: placedata[i][1], lng: placedata[i][2] },
         map: map,
@@ -39,27 +39,31 @@ function movetomyhouse() {
     map.panTo(new google.maps.LatLng(35.679317, 139.589668));
 }
 
+var latLng;
 
+var neko = new google.maps.Marker({
+    position:{lat: 0, lng: 0},
+    map: map,
+    icon: 'neko.png'
+});
 
-
-
-
-
-//現在地を追跡,https://syncer.jp/how-to-use-geolocation-api    
+//現在地を追跡,https://syncer.jp/how-to-use-geolocation-api
 var watchId = navigator.geolocation.watchPosition(
     function (result) {
     //    neko.setMap(null); //ここ不安
+        neko.setVisible(false);
         //現在地の取得成功
         var position = result.coords,
             radius = position.accuracy,
-            latLng = new google.maps.LatLng(position.latitude, position.longitude),
+        latLng = new google.maps.LatLng(position.latitude, position.longitude);
+        neko = new google.maps.Marker({
+            position:latLng,
+            map: map,
+            icon: 'neko.png'
+        });
+        neko.setVisible(true);
 
-            neko = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                icon: 'neko.png'
-            });
-       //チェック用、あとで消す 
+       //チェック用、あとで消す
         var nichiji = new Date(),
             year = nichiji.getFullYear(),
             month = nichiji.getMonth() + 1,
@@ -100,7 +104,7 @@ var watchId = navigator.geolocation.watchPosition(
         "maximumAge": 0
     }
 );
-    
+
 
 
 
@@ -163,7 +167,7 @@ function decision() {
     //捕まえられる場合(設定した範囲内に魚がいる場合)
     if (){
     //捕獲数+1
-    
+
     //アイコン消す
     marker[i].setMap(null);
     //つかまえたアラート
