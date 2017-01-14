@@ -21,9 +21,10 @@ border: 3px green solid;
 border-radius: 10px;
 }
 
-#map {
-      width: 50%;
-    height: auto;
+div#map {
+      width: 320px;
+    height: 320px;
+    margin: 0 auto;
   }
 
 

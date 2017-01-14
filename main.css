@@ -16,9 +16,10 @@ margin-right: auto;
 border: 3px green solid;
 border-radius: 10px;
 }
-#map{
+div#map{
     width:500px;
     height:250px;
+    margin: 0 auto;
     }
  
 }/* ←CSSの一番最後に記述 */
