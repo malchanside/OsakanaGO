@@ -42,7 +42,7 @@ function movetomyhouse() {
 var latLng;
 
 var neko = new google.maps.Marker({
-    position:{lat: 0, lng: 0},
+    position: {lat: 0, lng: 0},
     map: map,
     icon: 'neko.png'
 });
@@ -55,9 +55,9 @@ var watchId = navigator.geolocation.watchPosition(
         //現在地の取得成功
         var position = result.coords,
             radius = position.accuracy,
-        latLng = new google.maps.LatLng(position.latitude, position.longitude);
+            latLng = new google.maps.LatLng(position.latitude, position.longitude);
         neko = new google.maps.Marker({
-            position:latLng,
+            position: latLng,
             map: map,
             icon: 'neko.png'
         });
@@ -107,7 +107,7 @@ var watchId = navigator.geolocation.watchPosition(
 
 
 
-
+//https://syncer.jp/how-to-use-geolocation-api
 /*
 function catchfish() {
 // 現在地を取得
@@ -162,19 +162,20 @@ function catchfish() {
 
 var counter = 0;
 
-/*
-function decision() {
-    //捕まえられる場合(設定した範囲内に魚がいる場合)
-    if (){
-    //捕獲数+1
 
-    //アイコン消す
-    marker[i].setMap(null);
-    //つかまえたアラート
-    alert(placedata[][0] + 'の' + placedata[][3] + 'をつかまえた！');
-    }else{
-//無理な場合
-    alert('つかまえられなかったよ！もう少し近づいてね！');
+function decision() {
+    for (i = 0; i < 5; i++) {
+        if (){
+            //捕まえられる場合(設定した範囲内に魚がいる場合)
+            //捕獲数+1
+
+            //アイコン消す
+            marker[i].setMap(null);
+            //つかまえたアラート
+            document.getElementById('getosakana1').innerHTML = (placedata[i][0] + 'の魚をつかまえた！');
+        }else{
+            //無理な場合
+            alert('つかまえられなかったよ！もう少し近づいてね！');
+        }
     }
 }
-*/
