@@ -1,12 +1,15 @@
 /* スマートフォン用CSS */
-@media screen and (max-width: 640px) {
- 
+@media screen and (max-width: 640px) { 
+/*全体*/
 img{
 max-width: 100%;
 height: auto;
 width /***/:auto;
 } 
-/* ここから通常のCSS */
+body {
+  -webkit-text-size-adjust: 100%;
+}
+/*各要素*/
 h1{font-size: 20px, color: blue;}
 
 p{
