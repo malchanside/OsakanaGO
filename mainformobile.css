@@ -1,0 +1,34 @@
+/* スマートフォン用CSS */
+@media screen and (max-width: 640px) { 
+/*全体*/
+img{
+max-width: 100%;
+height: auto;
+width /***/:auto;
+} 
+body {
+  -webkit-text-size-adjust: 100%;
+}
+/*各要素*/
+h1{font-size: 20px, color: blue;}
+
+p{
+width: 50px;
+padding-left: 30px;
+padding-right: 30px;
+padding-top: 15px;
+padding-bottom: 15px;
+margin-left: auto;
+margin-right: auto;
+border: 3px green solid;
+border-radius: 10px;
+}
+
+div#map {
+      width: 320px;
+    height: 320px;
+    margin: 0 auto;
+  }
+
+
+}/* ←CSSの一番最後に記述 */
