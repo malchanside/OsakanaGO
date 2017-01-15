@@ -19,7 +19,7 @@ var placedata = [
     ['κ', 35.387704, 139.426141, 'fishicon2.png'],
     ['θ', 35.388918, 139.427515, 'fishicon3.png'],
     ['メディア', 35.388211, 139.427310, 'fishicon4.png'],
-    ['テスト用けーいち自宅', 35.679317, 139.589668, 'fishicon1.png']
+    ['テスト用けーいち自宅', 35.690885, 139.703263, 'fishicon1.png']
 ];
 var marker1, marker2, marker3, marker4, marker5;
 var marker = [marker1, marker2, marker3, marker4, marker5];
@@ -36,7 +36,7 @@ for (i = 0; i < 5; i++) {
 
 
 function movetomyhouse() {
-    map.panTo(new google.maps.LatLng(35.679317, 139.589668));
+    map.panTo(new google.maps.LatLng(placedata[4][1], placedata[4][2]));
 }
 
 var latLng;
@@ -47,10 +47,13 @@ var neko = new google.maps.Marker({
     icon: 'neko.png'
 });
 
+
+var ido, keido;
+
 //現在地を追跡,https://syncer.jp/how-to-use-geolocation-api
 var watchId = navigator.geolocation.watchPosition(
     function (result) {
-    //    neko.setMap(null); //ここ不安
+    //    neko.setMap(null);
         neko.setVisible(false);
         //現在地の取得成功
         var position = result.coords,
@@ -61,7 +64,10 @@ var watchId = navigator.geolocation.watchPosition(
             map: map,
             icon: 'neko.png'
         });
+        ido = position.latitude;
+        keido = position.longitude;
         neko.setVisible(true);
+
 
        //チェック用、あとで消す
         var nichiji = new Date(),
@@ -106,7 +112,7 @@ var watchId = navigator.geolocation.watchPosition(
 );
 
 
-
+//つかわないとおもふ
 //https://syncer.jp/how-to-use-geolocation-api
 /*
 function catchfish() {
@@ -161,21 +167,86 @@ function catchfish() {
 */
 
 var counter = 0;
+var sakana0 = 0,
+    sakana1 = 0,
+    sakana2 = 0,
+    sakana3 = 0,
+    sakana4 = 0;
+var count = [sakana0, sakana1, sakana2, sakana3, sakana4];
+var muri;
+var distance = 0;
+
+function tsukamaetakesu(){
+  document.getElementById('tsukamaeta').innerHTML = "<br>";
+}
 
 
-function decision() {
+function catchfish() {
+
     for (i = 0; i < 5; i++) {
-        if (){
-            //捕まえられる場合(設定した範囲内に魚がいる場合)
-            //捕獲数+1
+      var lat1 = ido,
+          lng1 = keido,
+          lat2 = placedata[i][1],
+          lng2 = placedata[i][2];
 
-            //アイコン消す
-            marker[i].setMap(null);
-            //つかまえたアラート
-            document.getElementById('getosakana1').innerHTML = (placedata[i][0] + 'の魚をつかまえた！');
-        }else{
+      // 測地線航海算法の公式,http://hamasyou.com/blog/2010/09/07/post-2/
+      //ここから引用
+    //  function geoDistance(lat1, lng1, lat2, lng2) {
+      // 引数 6 は小数点以下の桁数（距離の精度）
+
+          if ((Math.abs(lat1 - lat2) < 0.00001) && (Math.abs(lng1 - lng2) < 0.00001)) {
+            distance = 0;
+          } else {
+            lat1 = lat1 * Math.PI / 180;
+            lng1 = lng1 * Math.PI / 180;
+            lat2 = lat2 * Math.PI / 180;
+            lng2 = lng2 * Math.PI / 180;
+
+            var A = 6378140;
+            var B = 6356755;
+            var F = (A - B) / A;
+
+            var P1 = Math.atan((B / A) * Math.tan(lat1));
+            var P2 = Math.atan((B / A) * Math.tan(lat2));
+
+            var X = Math.acos(Math.sin(P1) * Math.sin(P2) + Math.cos(P1) * Math.cos(P2) * Math.cos(lng1 - lng2));
+            var L = (F / 8) * ((Math.sin(X) - X) * Math.pow((Math.sin(P1) + Math.sin(P2)), 2) / Math.pow(Math.cos(X / 2), 2) - (Math.sin(X) - X) * Math.pow(Math.sin(P1) - Math.sin(P2), 2) / Math.pow(Math.sin(X), 2));
+
+            distance = A * (X + L);
+            var decimal_no = Math.pow(10, 6);
+            distance = Math.round(decimal_no * distance / 1) / decimal_no;  //単位はmだよ
+          }
+          console.log(distance);
+    //  }
+      //ここまで引用
+      if (distance <= 15){
+          muri = 0;
+          //捕獲数+1
+          count[i] = 1;
+          counter = count[0] + count[1] + count[2] + count[3] + count[4];
+
+          //アイコン消す
+          marker[i].setMap(null);
+          //つかまえたアラート
+          document.getElementById('tsukamaeta').innerHTML = placedata[i][0] + "の魚をつかまえた！";
+          setTimeout(tsukamaetakesu, 3000);
+          //捕獲数表示を変える
+          document.getElementById('getosakana1').innerHTML = "捕まえた数<br>"+ counter + "匹";
+          shinka();
+      }else{
             //無理な場合
-            alert('つかまえられなかったよ！もう少し近づいてね！');
-        }
+          muri = 1;
+
+      }
     }
+    if(muri == 1){
+      alert('つかまえられなかったよ！もう少し近づいてね！');
+    }
+
+}
+
+var nekopic = ["neko1.jpg", "neko2.jpg", "neko3.jpg", "neko4.jpg", "neko5.jpg"];
+
+function shinka(){
+  document.getElementById("shinka").innerHTML = "<img src="+nekopic[counter-1]+">";
 }
